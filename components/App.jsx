@@ -182,8 +182,91 @@ event.preventDefault();
         .concat([updatedStamp]);
   });
 }
-
-  return{
-
-  }
+  return (
+  <div>
+    <h1 className="title">COVID TIMELINE Generator</h1>
+    <div className="box">
+      <form className="form" onSubmit={handleSubmit}>
+        <div className="input">
+          <p className="topic">ข้อมูลผู้ป่วย</p>
+          <span className="firstspanlabel">เพศ</span>
+          <span className="secondspanlabel">อายุ</span>
+          <br />
+          <TextField
+            className="textarea halfwidth"
+            name="gender"
+            select
+            type="text"
+            required="true"
+          >
+            {genders.map((option) => (
+              <MenuItem
+                style={{ display: "block" }}
+                key={option.value}
+                value={option.value}
+              >
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            className="textarea halfwidth right"
+            name="age"
+            type="number"
+            required="true"
+          />
+          <p className="label">อาชีพ</p>
+          <TextField
+            className="textarea"
+            name="career"
+            type="text"
+            fullWidth
+            required="true"
+            autoComplete="off"
+          />
+        </div>
+        <div className="input">
+          <p className="topic">ข้อมูลไทม์ไลน์</p>
+          <p className="label">วันเวลา</p>
+          <MuiPickersUtilsProvider utils={MomentUtils}>
+            <KeyboardDateTimePicker
+              className="textarea"
+              name="timestamp"
+              format="DD/MM/yyyy hh:mm A"
+              onChange={handleDateChange}
+              inputVariant="outlined"
+              value={selectedDate}
+            />
+          </MuiPickersUtilsProvider>
+          <p className="label">รายละเอียด</p>
+          <TextField
+            className="textarea"
+            name="description"
+            multiline
+            rows={5}
+            fullWidth
+            required="true"
+          />
+          <span className="spanlabel"></span>
+          <div className="viewdiv">
+            <View backgroundColor="#ffc107">
+              <Button className="button" type="submit" variant="contained">
+                {" + เพิ่มข้อมูล "}
+              </Button>
+            </View>
+          </div>
+        </div>
+      </form>
+      {isSubmitted && (
+        <Record
+          gender={info.gender}
+          age={info.age}
+          career={info.career}
+          timelineInfo={timelineInfo}
+          deleteLine={deleteLine}
+        />
+      )}
+    </div>
+  </div>
+);
 }
